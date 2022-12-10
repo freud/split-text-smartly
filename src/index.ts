@@ -2,12 +2,14 @@ interface TextSplitterOptions {
   trimSentence?: boolean
   maxAllowedRowLength?: number
   maxNumberOfRows?: number
+  fulfillEmptyRows?: boolean
 }
 
 interface Options {
   trimSentence: boolean
   maxAllowedRowLength: number
   maxNumberOfRows: number
+  fulfillEmptyRows: boolean
 }
 
 export default class TextSplitter {
@@ -18,7 +20,8 @@ export default class TextSplitter {
       ...options,
       trimSentence: options.trimSentence ?? false,
       maxAllowedRowLength: options.maxAllowedRowLength ?? 100,
-      maxNumberOfRows: options.maxNumberOfRows ?? 10
+      maxNumberOfRows: options.maxNumberOfRows ?? 10,
+      fulfillEmptyRows: options.fulfillEmptyRows ?? false
     };
   }
 
@@ -97,6 +100,12 @@ export default class TextSplitter {
       rows[rowIndex] = (rows[rowIndex] ?? '') + word
     }
 
-    return rows
+    if (!this.options.fulfillEmptyRows) {
+      return [...rows]
+    }
+
+    const numberOfRowsToFulfill = this.options.maxNumberOfRows - rows.length
+    const emptyRows: string[] = Array(numberOfRowsToFulfill).fill("")
+    return [...rows, ...emptyRows]
   }
 }

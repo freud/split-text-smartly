@@ -136,4 +136,24 @@ describe('TextSplitter', () => {
     })
   });
 
+  describe('Given text that takes less rows than configured', () => {
+    describe('When splitting', () => {
+      const useCases = [
+        { text: "abc def ghijk", maxAllowedLength: 5, maxNumberOfRows: 5, expectedResults: ["abc ", "def ", "ghijk", "", ""] }
+      ];
+      it.each(useCases)(
+        `returns empty rows to fulfill them up-to the max (%p)`,
+        (({ text, maxAllowedLength, maxNumberOfRows, expectedResults }) => {
+          const normalizer = new TextSplitter({
+            trimSentence: true,
+            maxAllowedRowLength: maxAllowedLength,
+            maxNumberOfRows: maxNumberOfRows,
+            fulfillEmptyRows: true
+          });
+          const result = normalizer.split(text);
+          expect(result).toEqual(expectedResults);
+        })
+      )
+    })
+  });
 })
