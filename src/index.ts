@@ -22,8 +22,12 @@ export default class TextSplitter {
     };
   }
 
-  split(text: string): string[] {
-    if (!text) {
+  split(text: string | null | undefined): string[] {
+    if (!text && typeof text !== "string") {
+      return [];
+    }
+
+    if (text.match(/^\s*$/g)) {
       return [text];
     }
 
@@ -96,13 +100,3 @@ export default class TextSplitter {
     return rows
   }
 }
-
-const splitter = new TextSplitter({
-  trimSentence: true,
-  maxAllowedRowLength: 10,
-  maxNumberOfRows: 3
-})
-const example1 = splitter.split("Paweł Sroczyński Atmosphere Sp. z o.o.")
-
-console.log(example1)
-console.log("STOP")
