@@ -11,11 +11,12 @@
   "version": "1.0.1",
   "main": "index.js",
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
     "start": "npx ts-node ./src/index.ts",
     "watch": "nodemon ./src/index.ts",
     "test": "jest --watchAll"
   },
-  "author": "",
+  "author": "Paul Sroczynski",
   "license": "ISC",
-  "description": "",
+  "description": "Split up the text at given position and by whitespace if possible"
 }
