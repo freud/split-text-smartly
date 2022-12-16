@@ -17,7 +17,7 @@
     "test": "jest --watchAll"
   },
   "author": "Paul Sroczynski",
-  "license": "ISC",
   "homepage": "https://github.com/freud/split-text-smartly",
+  "license": "MIT",
   "description": "Split up the text at given position and by whitespace if possible"
 }
